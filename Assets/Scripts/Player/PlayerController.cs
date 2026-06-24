@@ -39,13 +39,8 @@ public class PlayerController : MonoBehaviour
         theCam.localRotation = Quaternion.Euler(vertualRotation, 0f, 0f);
 
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
-       /* 
-        float frameIndepaendant = moveSpeed * Time.deltaTime;
-        Vector3 newTransform = transform.position +  new Vector3(moveInput.x * frameIndepaendant, 0f, moveInput.y *frameIndepaendant);
+       
 
-        transform.position = newTransform ;
-        */
-         //Vector3 moveAmount = new Vector3(moveInput.x, 0f,moveInput.y);
          Vector3 verticleMove = transform.forward* moveInput.y;
          Vector3 horizontalMove = transform.right* moveInput.x;
           
@@ -75,6 +70,12 @@ public class PlayerController : MonoBehaviour
  
 
     
+    }
+
+
+    void PlayerMove()
+    {
+        
     }
 
     
