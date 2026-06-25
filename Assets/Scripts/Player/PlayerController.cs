@@ -13,40 +13,63 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10f;
     public float jumpForce =2f;
     public float lookSpeed = 5f;
-    public Transform theCam;
+    public Camera theCam;
     
     private float ySpeed;
     private float horizontalRotation, vertualRotation;
- 
     public float minLookAngle,maxLookAngle;
+
+
+
+    public LayerMask stockLayerMask;
+    public float intractonRange = 5f;
+    private GameObject heldPickup;
+    public Transform holdPoint;
+    public float TrowForce = 10f;
+
+
+
+    public LayerMask shelfLayerMask;
+
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     
     void Update()
     {
+        
+        PlayerMove();
+        Intract();
+    
+    }
+
+
+    void PlayerMove()
+    {
         Vector2 lookinput = lookAction.action.ReadValue<Vector2>();
 
 
-        
+
         horizontalRotation = horizontalRotation + lookinput.x * Time.deltaTime * lookSpeed;
         transform.rotation = Quaternion.Euler(0f, horizontalRotation, 0f);
 
-        vertualRotation = vertualRotation + lookinput.y * Time.deltaTime * lookSpeed;
-        vertualRotation = Mathf.Clamp( vertualRotation,minLookAngle,maxLookAngle);
-        theCam.localRotation = Quaternion.Euler(vertualRotation, 0f, 0f);
+        vertualRotation +=  lookinput.y * Time.deltaTime * lookSpeed;
+        vertualRotation = Mathf.Clamp(vertualRotation, minLookAngle, maxLookAngle);
+
+
+        theCam.transform.localRotation = Quaternion.Euler(vertualRotation, 0f, 0f);
 
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
-       
 
-         Vector3 verticleMove = transform.forward* moveInput.y;
-         Vector3 horizontalMove = transform.right* moveInput.x;
-          
-        Vector3 moveAmount  = horizontalMove + verticleMove;
+
+        Vector3 verticleMove = transform.forward * moveInput.y;
+        Vector3 horizontalMove = transform.right * moveInput.x;
+
+        Vector3 moveAmount = horizontalMove + verticleMove;
         moveAmount = moveAmount.normalized;
-         moveAmount = moveAmount * moveSpeed;
+        moveAmount = moveAmount * moveSpeed;
 
 
         //jumping
@@ -61,25 +84,76 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        ySpeed = ySpeed+ (Physics.gravity.y * Time.deltaTime);
+        ySpeed = ySpeed + (Physics.gravity.y * Time.deltaTime);
 
 
         moveAmount.y = ySpeed;
-         
-         charCon.Move(moveAmount * Time.deltaTime);
- 
 
-    
+        charCon.Move(moveAmount * Time.deltaTime);
     }
 
 
-    void PlayerMove()
+
+
+
+
+
+
+
+    void Intract()
     {
+        Ray ray = theCam.ViewportPointToRay(new Vector3(.5f,.5f,0f));
+        RaycastHit hit;
+        if(heldPickup == null) //when we Do not have Something
+        {
+             if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                if (Physics.Raycast(ray, out hit, intractonRange, stockLayerMask))
+                {
+                    heldPickup = hit.collider.gameObject;
+                    heldPickup.transform.SetParent(holdPoint);
+                    heldPickup.transform.localPosition = Vector3.zero; // make pickup locaton and Rotation set
+
+                    heldPickup.transform.localRotation = Quaternion.identity;
+                    heldPickup.GetComponent<Rigidbody>().isKinematic = true;
+                }
+            }
+        }
+        else //when we Have something in the hand
+        {
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                
+                if(Physics.Raycast(ray,out hit,intractonRange,shelfLayerMask))
+                {
+                    heldPickup.transform.position = hit.transform.position;
+                    heldPickup.transform.rotation = hit.transform.rotation;
+
+                    heldPickup.transform.SetParent(null);
+
+                }
+            }
+
+
+
+            if (Mouse.current.rightButton.wasPressedThisFrame )
+             {
+            
+                Rigidbody pickupRb =  heldPickup.GetComponent<Rigidbody>();
+                pickupRb.isKinematic =false;
+                pickupRb.AddForce(theCam.transform.forward * TrowForce,ForceMode.Impulse);
+
+
+                heldPickup.transform.SetParent(null);
+                heldPickup = null;
+
+             }
+        }
         
     }
 
     
-
+    
 
 
 }
