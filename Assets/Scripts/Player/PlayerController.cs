@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask stockLayerMask;
     public float intractonRange = 5f;
-    private GameObject heldPickup;
+    private StockObject heldPickup;
     public Transform holdPoint;
     public float TrowForce = 10f;
 
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     
@@ -110,12 +110,12 @@ public class PlayerController : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out hit, intractonRange, stockLayerMask))
                 {
-                    heldPickup = hit.collider.gameObject;
-                    heldPickup.transform.SetParent(holdPoint);
-                    heldPickup.transform.localPosition = Vector3.zero; // make pickup locaton and Rotation set
+                   
 
-                    heldPickup.transform.localRotation = Quaternion.identity;
-                    heldPickup.GetComponent<Rigidbody>().isKinematic = true;
+
+                    heldPickup = hit.collider.GetComponent<StockObject>();
+                    heldPickup.transform.SetParent(holdPoint);
+                    heldPickup.PickUp();
                 }
             }
         }
@@ -126,12 +126,24 @@ public class PlayerController : MonoBehaviour
                 
                 if(Physics.Raycast(ray,out hit,intractonRange,shelfLayerMask))
                 {
-                    heldPickup.transform.position = hit.transform.position;
-                    heldPickup.transform.rotation = hit.transform.rotation;
+                    /*
+                    heldPickup.MakePlaced();
+                    heldPickup.transform.SetParent(hit.transform);
+                    heldPickup = null;
+                    */
 
-                    heldPickup.transform.SetParent(null);
 
+
+                    hit.collider.GetComponent<ShelfSpaceController>().PlaceStock(heldPickup);
+
+
+                    if (heldPickup.isPlaced)
+                    {
+                        heldPickup = null;
+                    }
                 }
+
+                
             }
 
 
@@ -139,9 +151,9 @@ public class PlayerController : MonoBehaviour
             if (Mouse.current.rightButton.wasPressedThisFrame )
              {
             
-                Rigidbody pickupRb =  heldPickup.GetComponent<Rigidbody>();
-                pickupRb.isKinematic =false;
-                pickupRb.AddForce(theCam.transform.forward * TrowForce,ForceMode.Impulse);
+                //Rigidbody pickupRb =  heldPickup.GetComponent<Rigidbody>();
+                heldPickup.Release();
+                heldPickup.rb.AddForce(theCam.transform.forward * TrowForce,ForceMode.Impulse);
 
 
                 heldPickup.transform.SetParent(null);
