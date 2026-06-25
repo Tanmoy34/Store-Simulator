@@ -7,6 +7,7 @@ public class StockObject : MonoBehaviour
     public float moveSpeed = 5f;
     public bool isPlaced;
     public Rigidbody rb;
+    public Collider col;
 
     void Awake()
     {
@@ -28,17 +29,23 @@ public class StockObject : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         isPlaced = false;
+        col.enabled =false;
     }
 
     public void MakePlaced()
     {
         rb.isKinematic = true;
         isPlaced = true;
+        col.enabled =false;
         
     }
 
     public void Release()
     {
         rb.isKinematic =false;
+        col.enabled =true;
     }
+
+
+   
 }

@@ -118,6 +118,19 @@ public class PlayerController : MonoBehaviour
                     heldPickup.PickUp();
                 }
             }
+            if (Mouse.current.rightButton.wasPressedThisFrame)
+            {
+                if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))
+                {
+                    heldPickup = hit.collider.GetComponent<ShelfSpaceController>().GetStock();
+                    if(heldPickup!=null)
+                    {
+                        heldPickup.transform.SetParent(holdPoint);
+                        heldPickup.PickUp();
+                    }
+
+                }
+            }
         }
         else //when we Have something in the hand
         {
@@ -126,11 +139,7 @@ public class PlayerController : MonoBehaviour
                 
                 if(Physics.Raycast(ray,out hit,intractonRange,shelfLayerMask))
                 {
-                    /*
-                    heldPickup.MakePlaced();
-                    heldPickup.transform.SetParent(hit.transform);
-                    heldPickup = null;
-                    */
+                    
 
 
 

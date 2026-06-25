@@ -1,16 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShelfSpaceController : MonoBehaviour
 {
     public StockInfo info;
 
-    int amountOnShelf;
+    
 
+    public List<StockObject> objectOnShelf; 
     public void PlaceStock(StockObject objectToPlace)
     {
         bool preventPlaceing = true;
-        Debug.Log(amountOnShelf);
-        if (amountOnShelf == 0)
+        
+        if (objectOnShelf.Count == 0)
         {
             info = objectToPlace.info;
             
@@ -33,10 +35,21 @@ public class ShelfSpaceController : MonoBehaviour
         {
             objectToPlace.transform.SetParent(transform);
             objectToPlace.MakePlaced();
-            
-            amountOnShelf += 1;
+
+            objectOnShelf.Add(objectToPlace);
         }
         
+    }
+    public StockObject GetStock()
+    {
+    
+        StockObject objectToReturn = null;
+        if (objectOnShelf.Count > 0)
+        {
+            objectToReturn = objectOnShelf[objectOnShelf.Count - 1];
+            objectOnShelf.RemoveAt(objectOnShelf.Count - 1);
+        }
+        return objectToReturn;
     }
 
 
