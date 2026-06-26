@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ShelfSpaceController : MonoBehaviour
@@ -13,6 +14,7 @@ public class ShelfSpaceController : MonoBehaviour
     public List<Transform> tubeChipsPoints;
     public List<Transform> fruitsPoints;
     public List<Transform> largeFruitsPoints;
+    public TMP_Text shelfLebel;
 
     public void PlaceStock(StockObject objectToPlace)
     {
@@ -105,6 +107,8 @@ public class ShelfSpaceController : MonoBehaviour
 
 
             objectsOnShelf.Add(objectToPlace);
+
+            shelfLebel.text = "$" + objectsOnShelf[0].info.Price;
         }
         
     }

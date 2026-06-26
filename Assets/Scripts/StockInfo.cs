@@ -13,4 +13,6 @@ public class StockInfo
         fruitLarge
     }
     public StockType typeOfStock;
+
+    public float Price;
 }
