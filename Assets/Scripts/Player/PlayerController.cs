@@ -39,6 +39,14 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        if(UIController.instance.updatePricePanel != null)
+        {
+            if (UIController.instance.updatePricePanel.activeSelf)
+            {
+                return;
+            }
+            
+        }
         
         PlayerMove();
         Intract();
@@ -129,6 +137,14 @@ public class PlayerController : MonoBehaviour
                         heldPickup.PickUp();
                     }
 
+                }
+            }
+            if (Keyboard.current.tabKey.wasPressedThisFrame)
+            {
+                Debug.Log("tab key Press");
+                if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))
+                {
+                    hit.collider.GetComponent<ShelfSpaceController>().StartPriceUpdate();
                 }
             }
         }

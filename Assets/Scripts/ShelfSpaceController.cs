@@ -26,9 +26,6 @@ public class ShelfSpaceController : MonoBehaviour
             
             preventPlaceing =false;
             
-
-            
-            
         }
         else
         {
@@ -127,6 +124,14 @@ public class ShelfSpaceController : MonoBehaviour
             shelfLebel.text =string.Empty;
         }
         return objectToReturn;
+    }
+
+    public void StartPriceUpdate()
+    {
+        if(objectsOnShelf.Count> 0)
+        {
+            UIController.instance.OpenUpdatePrice();
+        }
     }
 
 
