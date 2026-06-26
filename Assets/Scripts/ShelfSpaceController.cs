@@ -121,6 +121,11 @@ public class ShelfSpaceController : MonoBehaviour
             objectToReturn = objectsOnShelf[objectsOnShelf.Count - 1];
             objectsOnShelf.RemoveAt(objectsOnShelf.Count - 1);
         }
+
+        if (objectsOnShelf.Count == 0)
+        {
+            shelfLebel.text =string.Empty;
+        }
         return objectToReturn;
     }
 

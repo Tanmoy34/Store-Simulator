@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5873204588978515803}
   - component: {fileID: 3399634364195356583}
   - component: {fileID: 7732200218462292452}
-  - component: {fileID: 8728747680871832384}
   - component: {fileID: 5579702301747662414}
+  - component: {fileID: 8728747680871832384}
   - component: {fileID: 4375551692416807576}
   - component: {fileID: 6317223204471051917}
   m_Layer: 6
@@ -93,6 +93,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5579702301747662414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445375771261004369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865f0e9b5a9207b44a161e17d3573bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StockObject
+  info:
+    name: Onion Chips
+    typeOfStock: 2
+    Price: 25
+    stockObject: {fileID: 0}
+  moveSpeed: 5
+  isPlaced: 0
+  rb: {fileID: 4375551692416807576}
+  col: {fileID: 8728747680871832384}
 --- !u!64 &8728747680871832384
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -115,25 +136,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6246669603822435405, guid: 82bc61e186d737f4fada7fbe88c10f65, type: 3}
---- !u!114 &5579702301747662414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445375771261004369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865f0e9b5a9207b44a161e17d3573bd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StockObject
-  info:
-    name: 
-    typeOfStock: 0
-  moveSpeed: 5
-  isPlaced: 0
-  rb: {fileID: 0}
-  col: {fileID: 0}
 --- !u!54 &4375551692416807576
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,6 +178,8 @@ MonoBehaviour:
   info:
     name: Onion Chips
     typeOfStock: 2
+    Price: 0
+    stockObject: {fileID: 0}
   moveSpeed: 5
   isPlaced: 0
   rb: {fileID: 4375551692416807576}

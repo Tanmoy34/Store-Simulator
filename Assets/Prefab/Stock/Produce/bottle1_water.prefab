@@ -130,6 +130,8 @@ MonoBehaviour:
   info:
     name: Water Drink
     typeOfStock: 1
+    Price: 10
+    stockObject: {fileID: 0}
   moveSpeed: 5
   isPlaced: 0
   rb: {fileID: 1293283766384500727}
@@ -176,6 +178,8 @@ MonoBehaviour:
   info:
     name: Water Drink
     typeOfStock: 1
+    Price: 0
+    stockObject: {fileID: 0}
   moveSpeed: 5
   isPlaced: 0
   rb: {fileID: 1293283766384500727}

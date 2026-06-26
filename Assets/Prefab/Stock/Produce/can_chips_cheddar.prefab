@@ -128,12 +128,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StockObject
   info:
-    name: 
-    typeOfStock: 0
+    name: Cheddar Chips
+    typeOfStock: 2
+    Price: 35
+    stockObject: {fileID: 0}
   moveSpeed: 5
   isPlaced: 0
-  rb: {fileID: 0}
-  col: {fileID: 0}
+  rb: {fileID: 2049839062458646378}
+  col: {fileID: 1488242932373877314}
 --- !u!54 &2049839062458646378
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,6 +178,8 @@ MonoBehaviour:
   info:
     name: Cheddar Chips
     typeOfStock: 2
+    Price: 0
+    stockObject: {fileID: 0}
   moveSpeed: 5
   isPlaced: 0
   rb: {fileID: 2049839062458646378}

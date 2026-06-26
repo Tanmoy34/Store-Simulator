@@ -14,6 +14,12 @@ public class StockObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    void Start()
+    {
+        
+        info = StockinfoController.instance.GetInfo(info.name);
+    }
+
     void Update()
     {
          
@@ -46,6 +52,6 @@ public class StockObject : MonoBehaviour
         col.enabled =true;
     }
 
+    
 
-   
 }

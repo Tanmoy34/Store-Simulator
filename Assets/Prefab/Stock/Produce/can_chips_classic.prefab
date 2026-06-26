@@ -128,12 +128,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StockObject
   info:
-    name: 
-    typeOfStock: 0
+    name: Classic Chips
+    typeOfStock: 2
+    Price: 32
+    stockObject: {fileID: 0}
   moveSpeed: 5
   isPlaced: 0
-  rb: {fileID: 0}
-  col: {fileID: 0}
+  rb: {fileID: 5031673361139534446}
+  col: {fileID: 7298639646959582028}
 --- !u!54 &5031673361139534446
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,6 +178,8 @@ MonoBehaviour:
   info:
     name: Classic Chips
     typeOfStock: 2
+    Price: 0
+    stockObject: {fileID: 0}
   moveSpeed: 5
   isPlaced: 0
   rb: {fileID: 5031673361139534446}
