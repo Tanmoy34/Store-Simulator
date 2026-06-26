@@ -7,12 +7,18 @@ public class ShelfSpaceController : MonoBehaviour
 
     
 
-    public List<StockObject> objectOnShelf; 
+    public List<StockObject> objectsOnShelf; 
+    public List<Transform> bigDrinkPoints;
+    public List<Transform> cerealPoints;
+    public List<Transform> tubeChipsPoints;
+    public List<Transform> fruitsPoints;
+    public List<Transform> largeFruitsPoints;
+
     public void PlaceStock(StockObject objectToPlace)
     {
         bool preventPlaceing = true;
         
-        if (objectOnShelf.Count == 0)
+        if (objectsOnShelf.Count == 0)
         {
             info = objectToPlace.info;
             
@@ -27,16 +33,78 @@ public class ShelfSpaceController : MonoBehaviour
            
             if(info.name == objectToPlace.info.name)
             {
-               preventPlaceing = false; 
+               preventPlaceing = false;
+
+                switch (info.typeOfStock)
+                {
+                    case StockInfo.StockType.bigDrink:
+                      if(objectsOnShelf.Count>= bigDrinkPoints.Count)
+                        {
+                            preventPlaceing = true;
+                        }  
+                        break;
+                    case StockInfo.StockType.cereal :
+                        if (objectsOnShelf.Count >= cerealPoints.Count)
+                        {
+                            preventPlaceing = true;
+                        }
+                        break;
+                    case StockInfo.StockType.chipsTube :
+                        if (objectsOnShelf.Count >= tubeChipsPoints.Count)
+                        {
+                            preventPlaceing = true;
+                        }
+                        break;
+                    case StockInfo.StockType.fruit:
+                        if (objectsOnShelf.Count >= fruitsPoints.Count)
+                        {
+                            preventPlaceing = true;
+                        }
+                        break;
+                    case StockInfo.StockType.fruitLarge :
+                        if (objectsOnShelf.Count >= largeFruitsPoints .Count)
+                        {
+                            preventPlaceing = true;
+                        }
+                        break;
+
+                } 
+
+
+
+               
             }
 
         }
         if(preventPlaceing == false)
         {
-            objectToPlace.transform.SetParent(transform);
+            //objectToPlace.transform.SetParent(transform);
             objectToPlace.MakePlaced();
 
-            objectOnShelf.Add(objectToPlace);
+            
+
+            switch (info.typeOfStock)
+            {
+                case StockInfo.StockType.bigDrink:
+                    objectToPlace.transform.SetParent(bigDrinkPoints[objectsOnShelf.Count]);
+                    break;
+                case StockInfo.StockType.cereal:
+                    objectToPlace.transform.SetParent(cerealPoints[objectsOnShelf.Count]);
+                    break;
+                case StockInfo.StockType.chipsTube:
+                    objectToPlace.transform.SetParent(tubeChipsPoints[objectsOnShelf.Count]);
+                    break;
+                case StockInfo.StockType.fruit:
+                    objectToPlace.transform.SetParent(fruitsPoints[objectsOnShelf.Count]);
+                    break;
+                case StockInfo.StockType.fruitLarge:
+                    objectToPlace.transform.SetParent(largeFruitsPoints[objectsOnShelf.Count]);
+                    break;
+
+            }
+
+
+            objectsOnShelf.Add(objectToPlace);
         }
         
     }
@@ -44,10 +112,10 @@ public class ShelfSpaceController : MonoBehaviour
     {
     
         StockObject objectToReturn = null;
-        if (objectOnShelf.Count > 0)
+        if (objectsOnShelf.Count > 0)
         {
-            objectToReturn = objectOnShelf[objectOnShelf.Count - 1];
-            objectOnShelf.RemoveAt(objectOnShelf.Count - 1);
+            objectToReturn = objectsOnShelf[objectsOnShelf.Count - 1];
+            objectsOnShelf.RemoveAt(objectsOnShelf.Count - 1);
         }
         return objectToReturn;
     }
