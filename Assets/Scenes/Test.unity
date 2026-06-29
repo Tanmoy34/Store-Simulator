@@ -1374,7 +1374,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 357605785}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 741282972}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: ApplyPriceUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &357605785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1932,6 +1944,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0df1ec75e2823843a2d2cb6a1cae59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIController
+  basePriceText: {fileID: 339214385}
+  currentPriceText: {fileID: 1338671920}
+  priceInputField: {fileID: 1210367603}
   updatePricePanel: {fileID: 1924120668}
 --- !u!1 &832575517
 GameObject:
@@ -2319,71 +2334,88 @@ MonoBehaviour:
   - name: Apple
     typeOfStock: 3
     Price: 20
+    currentPrice: 0
     stockObject: {fileID: 5397179083364926670, guid: 2fbac5511d9ed3948bcc1c2f68d8c755, type: 3}
   - name: aubergine
     typeOfStock: 3
     Price: 45
+    currentPrice: 0
     stockObject: {fileID: 7290957112378923191, guid: 75e3113c31864c145a09757df52696e7, type: 3}
   - name: lemon
     typeOfStock: 3
     Price: 20
+    currentPrice: 0
     stockObject: {fileID: 7599004433413190396, guid: 2d0708f554e5a8e48b028ff4bdd5baa7, type: 3}
   - name: lettuce
     typeOfStock: 4
     Price: 40
+    currentPrice: 0
     stockObject: {fileID: 8540043691853035364, guid: 80ed439d354e2b94c935bcb95ea469f8, type: 3}
   - name: pineapple
     typeOfStock: 4
     Price: 75
+    currentPrice: 0
     stockObject: {fileID: 4768080572851051164, guid: 24401e7d85d16cd4fa0dee7ed94b5adb, type: 3}
   - name: watermelon Half
     typeOfStock: 4
     Price: 15
+    currentPrice: 0
     stockObject: {fileID: 92542628153076357, guid: 96c0767a982c7fd488f7dc80a606cc57, type: 3}
   - name: watermelon Whole
     typeOfStock: 4
     Price: 30
+    currentPrice: 0
     stockObject: {fileID: 9148548662255905606, guid: 138e208907eeef84fb75320080851301, type: 3}
   ProduceInfo:
   - name: Cola Drink
     typeOfStock: 1
     Price: 20
+    currentPrice: 0
     stockObject: {fileID: 1643469017018766316, guid: 5012146b5f98cdb46a298d55afd50b86, type: 3}
   - name: 'Lime Drink '
     typeOfStock: 1
     Price: 20
+    currentPrice: 0
     stockObject: {fileID: 1440197629292349754, guid: 76e2e5b6c73dd0c4fa2f8a7bc7b717c8, type: 3}
   - name: Ornage Drink
     typeOfStock: 1
     Price: 25
+    currentPrice: 0
     stockObject: {fileID: 5598397934004746987, guid: 19edf0228b632f04ab2d103648a2363f, type: 3}
   - name: Water Drink
     typeOfStock: 1
     Price: 10
+    currentPrice: 0
     stockObject: {fileID: 8272271455758384315, guid: 7b96ef5710ec5134d82a4fb035b60837, type: 3}
   - name: Granola Cereal
     typeOfStock: 0
     Price: 45
+    currentPrice: 0
     stockObject: {fileID: 8801524233603239490, guid: de77bed22e6e7e74ca0ca7961757b608, type: 3}
   - name: Rings Cereal
     typeOfStock: 0
     Price: 45
+    currentPrice: 0
     stockObject: {fileID: 8930258423903393292, guid: 9ac2c77773bfd9244a147b188e75c54d, type: 3}
   - name: BBQ Chips
     typeOfStock: 2
     Price: 30
+    currentPrice: 0
     stockObject: {fileID: 6650792496011470677, guid: 0e88aee2ad5dacc448d4751a47cb475a, type: 3}
   - name: Cheddar Chips
     typeOfStock: 2
     Price: 35
+    currentPrice: 0
     stockObject: {fileID: 286831815381189052, guid: f165bae740c4335498223dbff445b40d, type: 3}
   - name: Classic Chips
     typeOfStock: 2
     Price: 32
+    currentPrice: 0
     stockObject: {fileID: 2971142569899579107, guid: a0ae5a00db403354097bb4093706ccd9, type: 3}
   - name: Onion Chips
     typeOfStock: 2
     Price: 0
+    currentPrice: 0
     stockObject: {fileID: 5579702301747662414, guid: 360a65917bc114f4489524af5aff1cc4, type: 3}
   allStock: []
 --- !u!4 &1158475044
@@ -2414,7 +2446,7 @@ GameObject:
   - component: {fileID: 1210367604}
   - component: {fileID: 1210367603}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: ' Price InputField (TMP)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
