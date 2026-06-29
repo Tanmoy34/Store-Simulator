@@ -139,7 +139,7 @@ public class ShelfSpaceController : MonoBehaviour
         if (objectsOnShelf.Count > 0)
         {
             info.currentPrice = price;
-            shelfLebel.text = "$" + info.currentPrice;
+            shelfLebel.text = "$" + info.currentPrice.ToString("F2");
         }
         
 
