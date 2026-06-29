@@ -15,6 +15,13 @@ public class StockBox : MonoBehaviour
 
     public List<StockObject> stocksInBox;
 
+    public Rigidbody rb;
+    public Collider col;
+
+    private bool isHeld;
+    public float moveSpeed = 5f;
+    
+    public GameObject flap1,flap2;
 
     void Start()
     {
@@ -29,6 +36,11 @@ public class StockBox : MonoBehaviour
             testFill = false;
 
             SetupBox(info);
+        }
+        if(isHeld == true)
+        {
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, Vector3.zero, moveSpeed * Time.deltaTime);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, moveSpeed * Time.deltaTime); 
         }
     }
 
@@ -73,6 +85,57 @@ public class StockBox : MonoBehaviour
     }
 
 
+    public void PickUp()
+    {
+        rb.isKinematic = true;
+        isHeld = true;
+        
+        col.enabled = false;
+    }
 
-    
+
+    public void Release()
+    {
+        isHeld = false;
+        rb.isKinematic = false;
+        col.enabled = true;
+    }
+
+
+    public void OpenCloseBox()
+    {
+        if(flap1.activeSelf == true)
+        {
+            flap1.SetActive(false);
+            flap2.SetActive(false);
+        }
+        else
+        {
+            flap1.SetActive(true);
+            flap2.SetActive(true);
+
+        }
+    }
+
+    public void PlaceStockOnShelf(ShelfSpaceController shelf)
+    {
+        if (stocksInBox.Count > 0)
+        {
+            shelf.PlaceStock(stocksInBox[stocksInBox.Count -1]);
+            if(stocksInBox[stocksInBox.Count-1].isPlaced == true)
+            {
+                stocksInBox.RemoveAt(stocksInBox.Count - 1);
+            }
+        }
+        if(flap1.activeSelf == true)
+        {
+            OpenCloseBox();
+        }
+    } 
+
+
+
+
+
+
 }

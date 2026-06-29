@@ -10,13 +10,16 @@ public class UIController : MonoBehaviour
     
     private StockInfo activeStockInfo;
     public GameObject updatePricePanel;
+
+
+    public TMP_Text moneyText;
     void Awake()
     {
        instance =this; 
     }
     void Start()
     {
-        
+       
     }
 
     
@@ -61,5 +64,10 @@ public class UIController : MonoBehaviour
             CloseUpdatePrice();
         
         
+    }
+
+    public void UpdateMoney(float currentMoney)
+    {
+        moneyText.text ="$" +  currentMoney.ToString("F2");
     }
 }

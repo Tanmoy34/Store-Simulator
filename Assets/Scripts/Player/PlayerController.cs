@@ -31,6 +31,11 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask shelfLayerMask;
 
+
+    public LayerMask stockBoxlayerMask;
+    public StockBox heldBox;
+    public Transform boxHoldPoint;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -112,10 +117,12 @@ public class PlayerController : MonoBehaviour
     {
         Ray ray = theCam.ViewportPointToRay(new Vector3(.5f,.5f,0f));
         RaycastHit hit;
-        if(heldPickup == null) //when we Do not have Something
+        if(heldPickup == null && heldBox == null) //when we Do not have Something
         {
-             if (Mouse.current.leftButton.wasPressedThisFrame)
+            
+            if (Mouse.current.leftButton.wasPressedThisFrame) //just Pick box or object
             {
+                
                 if (Physics.Raycast(ray, out hit, intractonRange, stockLayerMask))
                 {
                    
@@ -124,9 +131,22 @@ public class PlayerController : MonoBehaviour
                     heldPickup = hit.collider.GetComponent<StockObject>();
                     heldPickup.transform.SetParent(holdPoint);
                     heldPickup.PickUp();
+                    return;
+                }
+                else if (Physics.Raycast(ray, out hit, intractonRange, stockBoxlayerMask))
+                {
+                   
+                    heldBox = hit.collider.GetComponent<StockBox>();
+                    heldBox.transform.SetParent(boxHoldPoint);
+                    heldBox.PickUp();
+                    if(heldBox.flap1.activeSelf == true)
+                    {
+                        heldBox.OpenCloseBox();  
+                    }
+                                       
                 }
             }
-            if (Mouse.current.rightButton.wasPressedThisFrame)
+            if (Mouse.current.rightButton.wasPressedThisFrame) //Get back stockObject to hand
             {
                 if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))
                 {
@@ -136,12 +156,20 @@ public class PlayerController : MonoBehaviour
                         heldPickup.transform.SetParent(holdPoint);
                         heldPickup.PickUp();
                     }
+                    return;
 
                 }
+                if (Physics.Raycast(ray, out hit, intractonRange, stockBoxlayerMask))
+                {
+                     hit.collider.GetComponent<StockBox>().OpenCloseBox();
+                    
+                }
+
+
             }
-            if (Keyboard.current.tabKey.wasPressedThisFrame)
+            if (Keyboard.current.tabKey.wasPressedThisFrame) //opening price change Manu
             {
-                Debug.Log("tab key Press");
+                
                 if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))
                 {
                     hit.collider.GetComponent<ShelfSpaceController>().StartPriceUpdate();
@@ -150,47 +178,59 @@ public class PlayerController : MonoBehaviour
         }
         else //when we Have something in the hand
         {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            if (heldPickup != null)
             {
-                
-                if(Physics.Raycast(ray,out hit,intractonRange,shelfLayerMask))
+                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    
-
-
-
-                    hit.collider.GetComponent<ShelfSpaceController>().PlaceStock(heldPickup);
-
-
-                    if (heldPickup.isPlaced)
+                
+                    if(Physics.Raycast(ray,out hit,intractonRange,shelfLayerMask))
                     {
-                        heldPickup = null;
+                    
+                        hit.collider.GetComponent<ShelfSpaceController>().PlaceStock(heldPickup);
+
+
+                        if (heldPickup.isPlaced)
+                        {
+                            heldPickup = null;
+                        }
                     }
+                 }
+                if (Mouse.current.rightButton.wasPressedThisFrame) // Try to throw Objects
+                {
+
+
+                    heldPickup.Release();
+                    heldPickup.rb.AddForce(theCam.transform.forward * TrowForce, ForceMode.Impulse);
+
+
+                    heldPickup.transform.SetParent(null);
+                    heldPickup = null;
+
+
+
+
                 }
 
+            }
+            if(heldBox != null)
+            {
+                if (Mouse.current.rightButton.wasPressedThisFrame) // Try to throw Objects
+                {
+                    heldBox.Release();
+                    heldBox.rb.AddForce(theCam.transform.forward * TrowForce, ForceMode.Impulse);
+                    heldBox.transform.SetParent(null);
+                    heldBox = null;
+                }
+
+                if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))
+                    {
+                        heldBox.PlaceStockOnShelf(hit.collider.GetComponent<ShelfSpaceController>());
+                    }
+                }
                 
             }
-
-
-
-            if (Mouse.current.rightButton.wasPressedThisFrame )
-             {
-            
-                //Rigidbody pickupRb =  heldPickup.GetComponent<Rigidbody>();
-                heldPickup.Release();
-                heldPickup.rb.AddForce(theCam.transform.forward * TrowForce,ForceMode.Impulse);
-
-
-                heldPickup.transform.SetParent(null);
-                heldPickup = null;
-
-             }
-        }
-        
+        }        
     }
-
-    
-    
-
-
 }
