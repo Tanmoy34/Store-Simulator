@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class StockBox : MonoBehaviour
 {
@@ -132,6 +134,33 @@ public class StockBox : MonoBehaviour
             OpenCloseBox();
         }
     } 
+
+    public int GetStockAmount(StockInfo.StockType type)
+    {
+        int toReturn = 0;
+
+        switch (type)
+        {
+            case StockInfo.StockType.bigDrink:
+                toReturn = bigDrinkPoints.Count;
+                break;
+
+            case StockInfo.StockType.cereal:
+                toReturn = cerealPoints.Count;
+                break;
+            case StockInfo.StockType.chipsTube:
+                toReturn = cerealPoints.Count;
+                break;
+            case StockInfo.StockType.fruit:
+                toReturn = fruitsPoints.Count;
+                break;
+            case StockInfo.StockType.fruitLarge:
+                toReturn = largeFruitsPoints.Count;
+                break;
+
+        }
+        return toReturn;
+    }
 
 
 

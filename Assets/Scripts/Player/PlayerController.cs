@@ -44,18 +44,36 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        if(UIController.instance.updatePricePanel != null)
+        
+        IsUpdatePanelUIOpened();
+        IsBuyPanelUIOpened();
+        PlayerMove();
+        Intract();
+    
+    }
+
+    public void IsUpdatePanelUIOpened()
+    {
+        if (UIController.instance.updatePricePanel != null)
         {
             if (UIController.instance.updatePricePanel.activeSelf)
             {
                 return;
             }
-            
+
         }
-        
-        PlayerMove();
-        Intract();
-    
+    }
+
+    public void IsBuyPanelUIOpened()
+    {
+        if (UIController.instance.buyManuScreen != null)
+        {
+            if (UIController.instance.buyManuScreen.activeSelf)
+            {
+                return;
+            }
+
+        }
     }
 
 
@@ -167,7 +185,7 @@ public class PlayerController : MonoBehaviour
 
 
             }
-            if (Keyboard.current.tabKey.wasPressedThisFrame) //opening price change Manu
+            if (Keyboard.current.eKey.wasPressedThisFrame) //opening price change Manu
             {
                 
                 if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))

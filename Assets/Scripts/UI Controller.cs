@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class UIController : MonoBehaviour
     
     private StockInfo activeStockInfo;
     public GameObject updatePricePanel;
+
+    public GameObject buyManuScreen;
+    public GameObject player;
 
 
     public TMP_Text moneyText;
@@ -25,11 +29,15 @@ public class UIController : MonoBehaviour
     
     void Update()
     {
-        
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            OpenCloseBuyManu();
+        }
     }
 
     public void OpenUpdatePrice(StockInfo stockToUpdate)
     {
+        
         updatePricePanel.SetActive(true);
         Cursor.lockState  = CursorLockMode.None;
         
@@ -42,6 +50,7 @@ public class UIController : MonoBehaviour
     }
     public void CloseUpdatePrice()
     {
+        
         updatePricePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -70,4 +79,21 @@ public class UIController : MonoBehaviour
     {
         moneyText.text ="$" +  currentMoney.ToString("F2");
     }
+
+    public void OpenCloseBuyManu()
+    {
+        
+       if (buyManuScreen.activeSelf == false)
+        {
+            buyManuScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            buyManuScreen.SetActive(false );
+            Cursor.lockState = CursorLockMode.Locked; 
+        }
+    }
+
+    
 }
