@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     public StockBox heldBox;
     public Transform boxHoldPoint;
 
+
+    public LayerMask binLayerMask;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -240,12 +243,33 @@ public class PlayerController : MonoBehaviour
                     heldBox = null;
                 }
 
+                if (Keyboard.current.eKey.wasPressedThisFrame)
+                {
+                    heldBox.OpenCloseBox();
+                }
+
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))
+                    if (heldBox.stocksInBox.Count > 0)
                     {
-                        heldBox.PlaceStockOnShelf(hit.collider.GetComponent<ShelfSpaceController>());
+                        if (Physics.Raycast(ray, out hit, intractonRange, shelfLayerMask))
+                        {
+                             heldBox.PlaceStockOnShelf(hit.collider.GetComponent<ShelfSpaceController>());
+
+                        
+                        
+                        }
+                        else
+                        {
+                            if (Physics.Raycast(ray, out hit, intractonRange, binLayerMask))
+                            {
+                                Destroy(heldBox.gameObject);
+                                heldBox = null;
+                            }
+                        }
                     }
+                    
+                    
                 }
                 
             }
